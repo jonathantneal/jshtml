@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>JSHTML by jonathantneal</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>JSHTML</h1>
+        <p>A javascript templating system for browsers and nodejs</p>
+        <p class="view"><a href="https://github.com/jonathantneal/jshtml">View the Project on GitHub <small>jonathantneal/jshtml</small></a></p>
+        <ul>
+          <li><a href="https://github.com/jonathantneal/jshtml/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jonathantneal/jshtml/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jonathantneal/jshtml">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>JSHTML</h1>
+
+<p>JSHTML is a javascript templating system for browsers and Node.js.  It's easy to use, performs exceptionally, and is totally customizable.  It is tested in all vendor supported browsers on both PC and Mac systems, including grandpa IE6+.</p>
+
+<h2>How to use it</h2>
+
+<p>First, add the JSHTML script to your site or page.</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jshtml.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
+
+
+<p>Then, create a new template.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">tpl</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JSHTML</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<p>Use JSHTML markup to format your templates.  Templates are compiled into native code on the fly for best performance.</p>
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s2">"Hello, &lt;%= name %&gt;!"</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<p>Set a context for the template to use.  Even though templates are compiled, you can change the context whenever you want.</p>
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">context</span><span class="p">({</span> <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"World"</span> <span class="p">});</span>
+</pre>
+</div>
+
+
+<p>Render your templates.  If neither the template or the context changes, caching pumps up performance even more.</p>
+
+<div class="highlight">
+<pre><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<p>For your convenience, JSHTML is chainable.</p>
+
+<div class="highlight">
+<pre><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s2">"Hello, &lt;%= name %&gt;!"</span><span class="p">).</span><span class="nx">context</span><span class="p">({</span> <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"World"</span> <span class="p">}).</span><span class="nx">render</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<h2>Customize everything</h2>
+
+<p>You can customize everything in JSHTML.</p>
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">delimiters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">START_PROP</span><span class="o">:</span> <span class="s1">'{{'</span><span class="p">,</span>
+    <span class="nx">END_PROP</span><span class="o">:</span>   <span class="s1">'}}'</span>
+<span class="p">};</span>
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s2">"Hello, {{= name }}"</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">helpers</span><span class="p">.</span><span class="nx">u</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'__out__+='</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s1">'.toUpperCase();'</span><span class="p">;</span> <span class="c1">// __out__ is the internal variable name for the rendered content.</span>
+<span class="p">};</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s1">'Hello, {{u name }}!'</span><span class="p">).</span><span class="nx">context</span><span class="p">({</span> <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"World"</span> <span class="p">});</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span> <span class="c1">// "Hello, WORLD!"</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">extenders</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'__out__+='</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s1">'.toUpperCase();'</span>
+<span class="p">};</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s1">'Hello, {{#foo name }}!'</span><span class="p">).</span><span class="nx">context</span><span class="p">({</span> <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"World"</span> <span class="p">});</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span> <span class="c1">// "Hello, WORLD!"</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="nx">tpl</span><span class="p">.</span><span class="nx">extenders</span><span class="p">.</span><span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="nx">isEnding</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">isEnding</span> <span class="o">?</span> <span class="s1">'}}'</span> <span class="o">:</span> <span class="s1">'for(var __property__ in '</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s1">'){with('</span> <span class="o">+</span> <span class="nx">content</span> <span class="o">+</span> <span class="s1">'[__property__]){'</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s1">'Hello,{{#bar name}} {{u this}}{{/bar}}!'</span><span class="p">).</span><span class="nx">context</span><span class="p">({</span> <span class="s2">"name"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"World"</span><span class="p">,</span> <span class="s2">"Earth"</span><span class="p">,</span> <span class="s2">"Planet"</span><span class="p">]</span> <span class="p">});</span>
+
+<span class="nx">tpl</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span> <span class="c1">// "Hello, WORLD EARTH PLANET!"</span>
+</pre>
+</div>
+
+
+<h2>Browser support</h2>
+
+<ul>
+<li>Google Chrome</li>
+<li>Mozilla Firefox 3+</li>
+<li>Apple Safari 4+</li>
+<li>Opera 10+</li>
+<li>Internet Explorer 6+</li>
+</ul><h2>License</h2>
+
+<p>MIT</p>
+
+<h2>Acknowledgements</h2>
+
+<p>JSHTML is a project by <a href="http://github.com/jonathantneal">Jonathan Neal</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jonathantneal">jonathantneal</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
